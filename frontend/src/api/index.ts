@@ -79,7 +79,7 @@ export async function get<T extends keyof GetAPIParams>(
     : [GetAPIParams[T], number?]
 ): Promise<ValidationT<GetAPITypes[T]>> {
   const url = urlFor(`api/${endpoint}`, params, false);
-  const json = await fetchJSON(url);
+  const json = await fetchJSON(url, { signal: AbortSignal.timeout(30 * 1000) });
   const res = getAPIValidators[endpoint](json);
   if (res.is_ok) {
     return res.value as ValidationT<GetAPITypes[T]>;
