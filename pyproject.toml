@@ -89,5 +89,5 @@ max-args = 9
 "contrib/**" = ["D"]
 "docs/**" = ["D"]
 "tests/**" = ["D"]
-"stubs/**" = ["D", "I002"]  # ignore docs and do not add annotations import
+"stubs/**" = ["D"]
 "src/fava/core/filters.py" = ["D"]
