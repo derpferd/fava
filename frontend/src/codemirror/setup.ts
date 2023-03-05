@@ -134,6 +134,23 @@ export function initBeancountEditor(
 }
 
 /**
+ * Set errors for in the editor, highlighting them
+ */
+export function setErrors(editor: EditorView, errors: BeancountError[]) {
+  const diagnostics = errors.map((error): Diagnostic => {
+    // Show errors without an attached line on first line
+    const line = editor.state.doc.line(error.source?.lineno ?? 1);
+    return {
+      from: line.from,
+      to: line.to,
+      severity: "error",
+      message: error.message,
+    };
+  });
+  editor.dispatch(setDiagnostics(editor.state, diagnostics));
+}
+
+/**
  * A basic readonly BQL editor that only does syntax highlighting.
  */
 export function initReadonlyQueryEditor(value: string): EditorAndAction {

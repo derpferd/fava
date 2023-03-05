@@ -75,27 +75,15 @@ router.on("page-loaded", () => {
 function pollForChanges(): void {
   get("changed").then((changed) => {
     if (changed) {
-        handleChange();
-    }
-    pollForChanges();
-  }, (...args: unknown[]) => {
-    log_error(...args)
-    new Promise(resolve => setTimeout(resolve, 5000)).then(pollForChanges);
-  });
-}
-
-function handleChange() {
-    has_changes.set(true);
-    if (store_get(fava_options).auto_reload) {
-      router.reload();
-    } else {
-      get("errors").then(
-        (errors) => errorCount.set(errors.length),
-        log_error
-      );
-      notify(_("File change detected. Click to reload."), "warning", () => {
+      has_changes.set(true);
+      if (store_get(fava_options).auto_reload) {
         router.reload();
-      });
+      } else {
+        get("errors").then((v) => errors.set(v), log_error);
+        notify(_("File change detected. Click to reload."), "warning", () => {
+          router.reload();
+        });
+      }
     }
 }
 
