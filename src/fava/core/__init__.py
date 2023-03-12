@@ -398,6 +398,9 @@ class FavaLedger:
             self.load_file()
         return changed
 
+    def get_latest_mtime(self) -> int:
+        return self._watcher.get_latest_mtime()
+
     def get_account_sign(self, account_name: str) -> int:
         """Get account sign.
 

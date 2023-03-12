@@ -79,20 +79,28 @@ router.on("page-loaded", () => {
 function pollForChanges(): void {
   get("changed").then((changed) => {
     if (changed) {
-      has_changes.set(true);
-      if (store_get(fava_options).auto_reload) {
-        router.reload();
-      } else {
-        get("errors").then(
-          (errors) => errorCount.set(errors.length),
-          log_error
-        );
-        notify(_("File change detected. Click to reload."), "warning", () => {
-          router.reload();
-        });
-      }
+        handleChange();
     }
-  }, log_error);
+    pollForChanges();
+  }, (...args: unknown[]) => {
+    log_error(...args)
+    new Promise(resolve => setTimeout(resolve, 5000)).then(pollForChanges);
+  });
+}
+
+function handleChange() {
+    has_changes.set(true);
+    if (store_get(fava_options).auto_reload) {
+      router.reload();
+    } else {
+      get("errors").then(
+        (errors) => errorCount.set(errors.length),
+        log_error
+      );
+      notify(_("File change detected. Click to reload."), "warning", () => {
+        router.reload();
+      });
+    }
 }
 
 function init(): void {
@@ -125,7 +133,8 @@ function init(): void {
   initSidebar();
   initGlobalKeyboardShortcuts();
   defineCustomElements();
-  setInterval(pollForChanges, 5000);
+//   setInterval(pollForChanges, 5000);
+  pollForChanges();
 
   ledgerData.subscribe((val) => {
     errorCount.set(val.errors);
