@@ -5,11 +5,15 @@
 import type { SvelteComponentTyped } from "svelte";
 
 import ChartSwitcher from "./charts/ChartSwitcher.svelte";
+import QueryTable from "./tables/QueryTable.svelte";
 
 const components = new Map<
   string,
   typeof SvelteComponentTyped<{ data?: unknown }>
->([["charts", ChartSwitcher]]);
+>([
+  ["charts", ChartSwitcher],
+  ["querytable", QueryTable],
+]);
 
 /**
  * A custom element that represents a Svelte component.
