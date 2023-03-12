@@ -158,6 +158,19 @@ def api_endpoint(func: Callable[..., Any]) -> Callable[[], Response]:
 @api_endpoint
 def get_changed() -> bool:
     """Check for file changes."""
+    import time
+
+    last_mtime = g.ledger.get_latest_mtime()
+
+    timeout = (
+        4 * 60
+    )  # 4 minutes given the default browser timeout is 5 minutes.
+    end_time = time.time() + timeout
+    while time.time() < end_time:
+        if last_mtime < g.ledger.get_latest_mtime():
+            return True
+        time.sleep(5)
+
     return g.ledger.changed()
 
 

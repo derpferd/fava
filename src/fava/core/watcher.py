@@ -31,13 +31,7 @@ class Watcher:
         self._folders = list(folders)
         self.check()
 
-    def check(self) -> bool:
-        """Check for changes.
-
-        Returns:
-            `True` if there was a file change in one of the files or folders,
-            `False` otherwise.
-        """
+    def get_latest_mtime(self) -> int:
         latest_mtime = 0
         for path in self._files:
             try:
@@ -51,7 +45,17 @@ class Watcher:
                 mtime = stat(dirpath).st_mtime_ns
                 if mtime > latest_mtime:
                     latest_mtime = mtime
+        return latest_mtime
 
+    def check(self) -> bool:
+        """Check for changes.
+
+        Returns:
+            `True` if there was a file change in one of the files or folders,
+            `False` otherwise.
+        """
+
+        latest_mtime = self.get_latest_mtime()
         changed = bool(latest_mtime != self.last_checked)
         self.last_checked = latest_mtime
         return changed

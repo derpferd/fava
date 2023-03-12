@@ -30,15 +30,9 @@ if TYPE_CHECKING:  # pragma: no cover
 BASEPATH = Path(__file__).parent.parent
 
 
-def filter_api_changed(record: Any) -> bool:
-    """Filter out LogRecords for requests that poll for changes."""
-    return "/api/changed HTTP" not in record.getMessage()
-
-
 def setup_logging() -> None:
     """Set up logging for Fava."""
     logging.basicConfig(level=logging.INFO, format="%(message)s")
-    logging.getLogger("werkzeug").addFilter(filter_api_changed)
 
 
 def resource_path(relative_path: str) -> Path:
