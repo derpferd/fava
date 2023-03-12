@@ -347,7 +347,7 @@ def report(report_name: str) -> str:
     return abort(404)
 
 
-@app.route("/<bfile>/extension/<report_name>/")
+@app.route("/<bfile>/extension/<report_name>/", methods=["GET", "POST"])
 def extension_report(report_name: str) -> str:
     """Endpoint for extension reports."""
     try:

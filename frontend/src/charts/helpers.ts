@@ -1,5 +1,6 @@
 import { hcl } from "d3-color";
 import { scaleOrdinal } from "d3-scale";
+import { schemeCategory10 } from "d3-scale-chromatic";
 import { derived, get } from "svelte/store";
 
 import { accounts, currencies_sorted, operating_currency } from "../stores";
@@ -52,8 +53,20 @@ export function hclColorRange(
   return colors.map((c) => c.toString());
 }
 
-export const colors10 = hclColorRange(10);
-export const colors15 = hclColorRange(15, 30, 80);
+
+
+export const colors10 = ["#1f77b4",
+"#ff7f0e",
+"#2ca02c",
+"#d62728",
+"#9467bd",
+"#8c564b",
+"#e377c2",
+"#7f7f7f",
+"#bcbd22",
+"#17becf",];//hclColorRange(10, 70, 70);
+export const colors15 = ["#1f77b4", "#aec7e8", "#ff7f0e", "#ffbb78", "#2ca02c", "#98df8a", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94", "#e377c2", "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5"];
+//hclColorRange(15, 30, 80);
 
 /*
  * The color scales for the charts.
@@ -68,7 +81,7 @@ export const treemapScale = derived(accounts, (accounts_val) =>
 );
 
 export const sunburstScale = derived(accounts, (accounts_val) =>
-  scaleOrdinal(colors10).domain(accounts_val)
+  scaleOrdinal(schemeCategory10).domain(accounts_val)
 );
 
 export const currenciesScale = derived(
