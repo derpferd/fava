@@ -401,6 +401,9 @@ class FavaLedger:
     def get_latest_mtime(self) -> int:
         return self._watcher.get_latest_mtime()
 
+    def wait_for_next_change(self, timeout_seconds: float) -> None:
+        return self._watcher.wait_for_next_change(timeout_seconds)
+
     def get_account_sign(self, account_name: str) -> int:
         """Get account sign.
 
