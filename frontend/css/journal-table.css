@@ -125,7 +125,7 @@
 }
 
 .journal p > .num {
-  width: 9rem;
+  width: 12rem;
   white-space: pre;
   border-left: 1px solid var(--table-border);
 }
