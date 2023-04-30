@@ -27,6 +27,7 @@ if TYPE_CHECKING:  # pragma: no cover
         documents: list[str]
         include: list[str]
         dcontext: DisplayContext
+        filename: str
 
     LoaderResult = tuple[Entries, list[BeancountError], BeancountOptions]
 
