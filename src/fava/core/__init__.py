@@ -388,6 +388,12 @@ class FavaLedger:
             self.load_file()
         return changed
 
+    def get_latest_mtime(self) -> int:
+        return self._watcher.get_latest_mtime()
+
+    def wait_for_next_change(self, timeout_seconds: float) -> None:
+        return self._watcher.wait_for_next_change(timeout_seconds)
+
     def interval_balances(
         self,
         filtered: FilteredLedger,

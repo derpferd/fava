@@ -45,6 +45,7 @@ dependencies = [
     "markdown2>=2.3.0,<3",
     "ply",
     "simplejson>=3.16.0,<4",
+    "inotify",
 ]
 
 [project.urls]

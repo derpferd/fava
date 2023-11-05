@@ -178,6 +178,15 @@ class DocumentDirectoryMissingError(FavaAPIError):
 @api_endpoint
 def get_changed() -> bool:
     """Check for file changes."""
+    import time
+
+    last_mtime = g.ledger.get_latest_mtime()
+
+    g.ledger.wait_for_next_change(4 * 60)
+
+    if last_mtime < g.ledger.get_latest_mtime():
+        return True
+
     return g.ledger.changed()
 
 
