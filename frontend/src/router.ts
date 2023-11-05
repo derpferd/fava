@@ -8,6 +8,7 @@
 import type { Readable, Writable } from "svelte/store";
 import { writable } from "svelte/store";
 
+import { setInnerHTML } from "./helpers";
 import { getUrlPath } from "./helpers";
 import { delegate, Events } from "./lib/events";
 import { fetch, handleText } from "./lib/fetch";
@@ -206,7 +207,7 @@ export class Router extends Events<"page-loaded"> {
           window.scroll(0, 0);
         }
         this.updateState();
-        this.article.innerHTML = content;
+        setInnerHTML(this.article, content);
       } else {
         if (historyState) {
           window.history.pushState(null, "", url);
